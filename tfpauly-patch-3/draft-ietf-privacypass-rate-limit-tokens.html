@@ -2175,13 +2175,10 @@ sec-token-request-blind = request_blind
           <h4 id="name-attester-behavior">
 <a href="#section-5.3.2" class="section-number selfRef">5.3.2. </a><a href="#name-attester-behavior" class="section-name selfRef">Attester behavior</a>
           </h4>
-<p id="section-5.3.2-1">Upon receiving a request from a Client, the Attester first performs any required
-attestation checks of the Client, as well as checking if the Client has been
+<p id="section-5.3.2-1">Upon receiving a request from a Client, the Attester checks if the Client has been
 penalized based on incorrect behavior using this protocol (see <a href="#penalization" class="auto internal xref">Section 5.6</a>).
-If the Attester does not trust the Client, it rejects the request with an appropriate
-HTTP 4xx error.<a href="#section-5.3.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.3.2-2">The Attester determines the Issuer name from the "issuer" variable in the request.
-If this Issuer is not known to or trusted by the Attester, including if the Issuer
+If the Client is not trusted, the Attester rejects the request with an appropriate HTTP 4xx error.<a href="#section-5.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.3.2-2">If this Issuer for the token request is not known to or trusted by the Attester, including if the Issuer
 has been penalized (see <a href="#penalization" class="auto internal xref">Section 5.6</a>), the Attester rejects the request with
 an appropriate HTTP error.<a href="#section-5.3.2-2" class="pilcrow">¶</a></p>
 <p id="section-5.3.2-3">If the Attester detects a token_type in the TokenRequest that it does not recognize
@@ -2337,7 +2334,7 @@ Issuer, the Attester MUST count this towards penalizing the Issuer (see <a href=
 The token response MUST continue to be processed, however, to prevent a malicious
 Issuer from using a token issuance failure as a signal to the requesting Origin.<a href="#section-5.5.2-3" class="pilcrow">¶</a></p>
 <p id="section-5.5.2-4">If the Anonymous Issuer Origin ID derived from the value in the "Sec-Token-Origin" header
-was previously received in a response for a different Anonymous Origin ID within the
+was previously received in a response for a request with a different Anonymous Origin ID within the
 same policy window, the Attester MUST count this towards penalizing the Issuer or
 Client (see <a href="#penalization" class="auto internal xref">Section 5.6</a>). The token response MUST continue to be processed, however,
 to prevent a malicious Issuer from using a token issuance failure as a signal to the
@@ -2396,18 +2393,18 @@ to Clients, Issuers, or both. Different penalization events are described
 below, with suggested thresholds. This list is not exhaustive.<a href="#section-5.6-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.6-3.1">Client Key changing more than once over any two consecutive policy windows.
-This is a Client-specific penalization event. A suggested threshold for
+This is a Client-specific penalization event. A RECOMMENDED threshold for
 penalizing the Client based on this is one event.<a href="#section-5.6-3.1" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-5.6-3.2">Issuer responses missing the "Sec-Token-Origin" header on a 2xx response.
-This is an Issuer-specific penalization event. A suggested threshold for
+This is an Issuer-specific penalization event. A RECOMMENDED threshold for
 penalizing the Issuer based on this is ten events across all Clients.<a href="#section-5.6-3.2" class="pilcrow">¶</a>
 </li>
           <li class="normal" id="section-5.6-3.3">Anonymous Issuer Origin ID (from Issuer) collision across two Anonymous
-Client IDs for a particular Client within a single policy window. This
-penalization event is applicable for both Clients and Issuers. A suggested
+Origin IDs for a particular Client within a single policy window. This
+penalization event is applicable for both Clients and Issuers. A RECOMMENDED
 threshold for penalizing the Issuer is ten events across all Clients.
-A suggested threshold for penalizing the Client is two events across multiple
+A RECOMMENDED threshold for penalizing the Client is two events across multiple
 Issuers, or five events with a single Issuer.<a href="#section-5.6-3.3" class="pilcrow">¶</a>
 </li>
         </ul>
