@@ -5,14 +5,14 @@
 Network Working Group                                     S. Hendrickson
 Internet-Draft                                                Google LLC
 Intended status: Informational                                J. Iyengar
-Expires: 1 August 2023                                            Fastly
+Expires: 4 September 2023                                         Fastly
                                                                 T. Pauly
                                                               Apple Inc.
                                                                S. Valdez
                                                               Google LLC
                                                               C. A. Wood
                                                               Cloudflare
-                                                         28 January 2023
+                                                            3 March 2023
 
 
                   Rate-Limited Token Issuance Protocol
@@ -52,7 +52,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 August 2023.
+   This Internet-Draft will expire on 4 September 2023.
 
 Copyright Notice
 
@@ -122,7 +122,7 @@ Table of Contents
    Appendix A.  Acknowledgements
    Appendix B.  Test Vectors
      B.1.  Origin Name Encryption Test Vector
-     B.2.  Anonymous Origin ID Test Vector
+     B.2.  Anonymous Issuer Origin ID Test Vector
    Authors' Addresses
 
 1.  Introduction
@@ -1866,22 +1866,22 @@ index_key = BKS-SerializePublicKey(evaluated_key)
 
    [ARCH]     Davidson, A., Iyengar, J., and C. A. Wood, "The Privacy
               Pass Architecture", Work in Progress, Internet-Draft,
-              draft-ietf-privacypass-architecture-09, 8 December 2022,
+              draft-ietf-privacypass-architecture-10, 30 January 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-
-              privacypass-architecture-09>.
+              privacypass-architecture-10>.
 
    [AUTHSCHEME]
               Pauly, T., Valdez, S., and C. A. Wood, "The Privacy Pass
               HTTP Authentication Scheme", Work in Progress, Internet-
-              Draft, draft-ietf-privacypass-auth-scheme-07, 8 December
-              2022, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              privacypass-auth-scheme-07>.
+              Draft, draft-ietf-privacypass-auth-scheme-08, 30 January
+              2023, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              privacypass-auth-scheme-08>.
 
    [BLINDSIG] Denis, F., Jacobs, F., and C. A. Wood, "RSA Blind
               Signatures", Work in Progress, Internet-Draft, draft-irtf-
-              cfrg-rsa-blind-signatures-07, 8 December 2022,
+              cfrg-rsa-blind-signatures-11, 16 February 2023,
               <https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-
-              rsa-blind-signatures-07>.
+              rsa-blind-signatures-11>.
 
    [ECDSA]    American National Standards Institute, "Public Key
               Cryptography for the Financial Services Industry - The
@@ -1895,9 +1895,9 @@ index_key = BKS-SerializePublicKey(evaluated_key)
    [ISSUANCE] Celi, S., Davidson, A., Faz-Hernandez, A., Valdez, S., and
               C. A. Wood, "Privacy Pass Issuance Protocol", Work in
               Progress, Internet-Draft, draft-ietf-privacypass-protocol-
-              07, 8 December 2022,
+              08, 30 January 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-
-              privacypass-protocol-07>.
+              privacypass-protocol-08>.
 
    [KEYAGREEMENT]
               Barker, E., Chen, L., Roginsky, A., Vassilev, A., and R.
@@ -1910,9 +1910,9 @@ index_key = BKS-SerializePublicKey(evaluated_key)
    [KEYBLINDING]
               Denis, F., Eaton, E., Lepoint, T., and C. A. Wood, "Key
               Blinding for Signature Schemes", Work in Progress,
-              Internet-Draft, draft-irtf-cfrg-signature-key-blinding-02,
-              2 August 2022, <https://datatracker.ietf.org/doc/html/
-              draft-irtf-cfrg-signature-key-blinding-02>.
+              Internet-Draft, draft-irtf-cfrg-signature-key-blinding-03,
+              31 January 2023, <https://datatracker.ietf.org/doc/html/
+              draft-irtf-cfrg-signature-key-blinding-03>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -2053,7 +2053,7 @@ afbf2048890d54618d408a6001fc8fb276f6828c46f4fe1381e9775eec72ee47593df738
 03ff521accb6fa081c151c758f3092a89fc6ef591934ff4bc860896c57f83a31b237dd1b
 803516c
 
-B.2.  Anonymous Origin ID Test Vector
+B.2.  Anonymous Issuer Origin ID Test Vector
 
    The test vector below for the procedure in Section 7 lists the
    following values:

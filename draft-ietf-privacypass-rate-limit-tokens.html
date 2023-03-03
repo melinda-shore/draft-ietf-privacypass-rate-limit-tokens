@@ -16,12 +16,12 @@ that allows for tokens to be rate-limited on a per-origin basis. This
 enables origins to use tokens for use cases that need to restrict access
 from anonymous clients. 
     " name="description">
-<meta content="xml2rfc 3.15.3" name="generator">
+<meta content="xml2rfc 3.16.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-privacypass-rate-limit-tokens-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.15.3
-    Python 3.10.9
+  xml2rfc 3.16.0
+    Python 3.10.10
     appdirs 1.4.4
     ConfigArgParse 1.5.3
     google-i18n-address 2.5.2
@@ -366,7 +366,7 @@ ul.empty li, .ulEmpty li {
   margin-top: 0.5em;
 }
 :is(ul, ol).compact, .ulCompact, .olCompact {
-  line-height: 100%;
+  line-height: 1;
   margin: 0 0 0 2em;
 }
 
@@ -376,9 +376,12 @@ dl {
   --indent: 3ch;
   /* --indent: attr(indent ch); not supported in any browser, but we can dream */
 }
+dl.olPercent {
+  --indent: 5ch;
+}
 dl > dt {
   float: left;
-  margin-right: 1em;
+  margin-right: 2ch;
   min-width: 8ch;
 }
 dl.dlNewline > dt {
@@ -388,6 +391,9 @@ dl > dd {
   margin-bottom: .8em;
   margin-left: var(--indent) !important; /* stupid element overrides */
   min-height: 2ex;
+}
+dl.olPercent > dt {
+  min-width: calc(var(--indent) - 2ch);
 }
 :is(dl.compact, .dlCompact) > dd {
   margin-bottom: 0;
@@ -588,10 +594,14 @@ hr {
 .bcp14 {
   font-variant: small-caps;
   font-weight: 600;
-  font-size: 14.5px;
+  font-size: var(--small-font-size);
 }
 .role {
   font-variant: all-small-caps;
+}
+sub, sup {
+  line-height: 1;
+  font-size: 80%;
 }
 
 /* info block */
@@ -1044,11 +1054,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">Rate-Limited Tokens</td>
-<td class="right">January 2023</td>
+<td class="right">March 2023</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Hendrickson, et al.</td>
-<td class="center">Expires 1 August 2023</td>
+<td class="center">Expires 4 September 2023</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1061,12 +1071,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-privacypass-rate-limit-tokens-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2023-01-28" class="published">28 January 2023</time>
+<time datetime="2023-03-03" class="published">3 March 2023</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2023-08-01">1 August 2023</time></dd>
+<dd class="expires"><time datetime="2023-09-04">4 September 2023</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1130,7 +1140,7 @@ from anonymous clients.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 August 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 September 2023.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1340,7 +1350,7 @@ from anonymous clients.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
                 <p id="section-toc.1-1.14.2.1.1"><a href="#appendix-B.1" class="auto internal xref">B.1</a>.  <a href="#name-origin-name-encryption-test" class="internal xref">Origin Name Encryption Test Vector</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.14.2.2">
-                <p id="section-toc.1-1.14.2.2.1"><a href="#appendix-B.2" class="auto internal xref">B.2</a>.  <a href="#name-anonymous-origin-id-test-ve" class="internal xref">Anonymous Origin ID Test Vector</a></p>
+                <p id="section-toc.1-1.14.2.2.1"><a href="#appendix-B.2" class="auto internal xref">B.2</a>.  <a href="#name-anonymous-issuer-origin-id-t" class="internal xref">Anonymous Issuer Origin ID Test Vector</a></p>
 </li>
             </ul>
 </li>
@@ -2484,7 +2494,7 @@ describes Issuer behavior for computing the mapping with its per-Origin secret,
 and <a href="#attester-output-anon-issuer-origin-id" class="auto internal xref">Section 7.4</a> describes the final Attester step for
 computing the client-origin index.<a href="#section-7-5" class="pilcrow">¶</a></p>
 <p id="section-7-6">The index computation is based on a signature scheme with key blinding and unblinding
-support, denoted BKS, as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-signature-key-blinding-02#section-3" class="relref">Section 3</a> of [<a href="#KEYBLINDING" class="cite xref">KEYBLINDING</a>]</span>. Such a scheme has the
+support, denoted BKS, as described in <span><a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-signature-key-blinding-03#section-3" class="relref">Section 3</a> of [<a href="#KEYBLINDING" class="cite xref">KEYBLINDING</a>]</span>. Such a scheme has the
 following functions:<a href="#section-7-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-7-7.1">BKS-KeyGen(): Generate a random private and public key pair (sk, pk).<a href="#section-7-7.1" class="pilcrow">¶</a>
@@ -3058,7 +3068,7 @@ generation) and pk is computed according to <span>[<a href="#RFC8032" class="cit
             <li class="normal" id="section-11.1.2-2.2">BKS-BlindKeyGen(): Generate and output 32 random bytes.<a href="#section-11.1.2-2.2" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-11.1.2-2.3">BKS-BlindPublicKey(pk, bk, ctx): Produce a blinded public key based on the input public
-key pk, blind bk, and context ctx according to <span>[<a href="#KEYBLINDING" class="cite xref">KEYBLINDING</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-signature-key-blinding-02#section-5.1" class="relref">Section 5.1</a></span>.<a href="#section-11.1.2-2.3" class="pilcrow">¶</a>
+key pk, blind bk, and context ctx according to <span>[<a href="#KEYBLINDING" class="cite xref">KEYBLINDING</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-signature-key-blinding-03#section-5.1" class="relref">Section 5.1</a></span>.<a href="#section-11.1.2-2.3" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-11.1.2-2.4">BKS-UnblindPublicKey(pk, bk, ctx): Produce an unblinded public key based on the input
 blinded public key pk, blind bk, and context ctx according to <span>[<a href="#KEYBLINDING" class="cite xref">KEYBLINDING</a>]</span>, Section 5.1.<a href="#section-11.1.2-2.4" class="pilcrow">¶</a>
@@ -3068,7 +3078,7 @@ the Ed25519 public key pk, as defined in <span>[<a href="#RFC8032" class="cite x
 boolean value indicating success.<a href="#section-11.1.2-2.5" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-11.1.2-2.6">BKS-BlindKeySign(sk_sign, sk_blind, ctx, msg): Sign input message msg with signing key sk_sign, blind
-sk_blind, and context ctx according to <span>[<a href="#KEYBLINDING" class="cite xref">KEYBLINDING</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-signature-key-blinding-02#section-5.2" class="relref">Section 5.2</a></span>, yielding an <code>Nsig=64</code> byte signature.<a href="#section-11.1.2-2.6" class="pilcrow">¶</a>
+sk_blind, and context ctx according to <span>[<a href="#KEYBLINDING" class="cite xref">KEYBLINDING</a>], <a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-signature-key-blinding-03#section-5.2" class="relref">Section 5.2</a></span>, yielding an <code>Nsig=64</code> byte signature.<a href="#section-11.1.2-2.6" class="pilcrow">¶</a>
 </li>
             <li class="normal" id="section-11.1.2-2.7">BKS-SerializePrivatekey(sk): Identity function which outputs sk as an <code>Nsk=32</code> byte buffer.<a href="#section-11.1.2-2.7" class="pilcrow">¶</a>
 </li>
@@ -3126,15 +3136,15 @@ in the "Permanent Message Header Field Names" &lt;<span><a href="https://www.ian
 <dl class="references">
 <dt id="ARCH">[ARCH]</dt>
         <dd>
-<span class="refAuthor">Davidson, A.</span>, <span class="refAuthor">Iyengar, J.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"The Privacy Pass Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-privacypass-architecture-09</span>, <time datetime="2022-12-08" class="refDate">8 December 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-architecture-09">https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-architecture-09</a>&gt;</span>. </dd>
+<span class="refAuthor">Davidson, A.</span>, <span class="refAuthor">Iyengar, J.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"The Privacy Pass Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-privacypass-architecture-10</span>, <time datetime="2023-01-30" class="refDate">30 January 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-architecture-10">https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-architecture-10</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="AUTHSCHEME">[AUTHSCHEME]</dt>
         <dd>
-<span class="refAuthor">Pauly, T.</span>, <span class="refAuthor">Valdez, S.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"The Privacy Pass HTTP Authentication Scheme"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-privacypass-auth-scheme-07</span>, <time datetime="2022-12-08" class="refDate">8 December 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-auth-scheme-07">https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-auth-scheme-07</a>&gt;</span>. </dd>
+<span class="refAuthor">Pauly, T.</span>, <span class="refAuthor">Valdez, S.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"The Privacy Pass HTTP Authentication Scheme"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-privacypass-auth-scheme-08</span>, <time datetime="2023-01-30" class="refDate">30 January 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-auth-scheme-08">https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-auth-scheme-08</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="BLINDSIG">[BLINDSIG]</dt>
         <dd>
-<span class="refAuthor">Denis, F.</span>, <span class="refAuthor">Jacobs, F.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"RSA Blind Signatures"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-rsa-blind-signatures-07</span>, <time datetime="2022-12-08" class="refDate">8 December 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-rsa-blind-signatures-07">https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-rsa-blind-signatures-07</a>&gt;</span>. </dd>
+<span class="refAuthor">Denis, F.</span>, <span class="refAuthor">Jacobs, F.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"RSA Blind Signatures"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-rsa-blind-signatures-11</span>, <time datetime="2023-02-16" class="refDate">16 February 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-rsa-blind-signatures-11">https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-rsa-blind-signatures-11</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="ECDSA">[ECDSA]</dt>
         <dd>
@@ -3146,7 +3156,7 @@ in the "Permanent Message Header Field Names" &lt;<span><a href="https://www.ian
 <dd class="break"></dd>
 <dt id="ISSUANCE">[ISSUANCE]</dt>
         <dd>
-<span class="refAuthor">Celi, S.</span>, <span class="refAuthor">Davidson, A.</span>, <span class="refAuthor">Faz-Hernandez, A.</span>, <span class="refAuthor">Valdez, S.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Privacy Pass Issuance Protocol"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-privacypass-protocol-07</span>, <time datetime="2022-12-08" class="refDate">8 December 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-protocol-07">https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-protocol-07</a>&gt;</span>. </dd>
+<span class="refAuthor">Celi, S.</span>, <span class="refAuthor">Davidson, A.</span>, <span class="refAuthor">Faz-Hernandez, A.</span>, <span class="refAuthor">Valdez, S.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Privacy Pass Issuance Protocol"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-privacypass-protocol-08</span>, <time datetime="2023-01-30" class="refDate">30 January 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-protocol-08">https://datatracker.ietf.org/doc/html/draft-ietf-privacypass-protocol-08</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="KEYAGREEMENT">[KEYAGREEMENT]</dt>
         <dd>
@@ -3154,7 +3164,7 @@ in the "Permanent Message Header Field Names" &lt;<span><a href="https://www.ian
 <dd class="break"></dd>
 <dt id="KEYBLINDING">[KEYBLINDING]</dt>
         <dd>
-<span class="refAuthor">Denis, F.</span>, <span class="refAuthor">Eaton, E.</span>, <span class="refAuthor">Lepoint, T.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Key Blinding for Signature Schemes"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-signature-key-blinding-02</span>, <time datetime="2022-08-02" class="refDate">2 August 2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-signature-key-blinding-02">https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-signature-key-blinding-02</a>&gt;</span>. </dd>
+<span class="refAuthor">Denis, F.</span>, <span class="refAuthor">Eaton, E.</span>, <span class="refAuthor">Lepoint, T.</span>, and <span class="refAuthor">C. A. Wood</span>, <span class="refTitle">"Key Blinding for Signature Schemes"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-irtf-cfrg-signature-key-blinding-03</span>, <time datetime="2023-01-31" class="refDate">31 January 2023</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-signature-key-blinding-03">https://datatracker.ietf.org/doc/html/draft-irtf-cfrg-signature-key-blinding-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -3302,10 +3312,10 @@ afbf2048890d54618d408a6001fc8fb276f6828c46f4fe1381e9775eec72ee47593df738
 </div>
 </section>
 </div>
-<div id="anonymous-origin-id-test-vector">
+<div id="anonymous-issuer-origin-id-test-vector">
 <section id="appendix-B.2">
-        <h3 id="name-anonymous-origin-id-test-ve">
-<a href="#appendix-B.2" class="section-number selfRef">B.2. </a><a href="#name-anonymous-origin-id-test-ve" class="section-name selfRef">Anonymous Origin ID Test Vector</a>
+        <h3 id="name-anonymous-issuer-origin-id-t">
+<a href="#appendix-B.2" class="section-number selfRef">B.2. </a><a href="#name-anonymous-issuer-origin-id-t" class="section-name selfRef">Anonymous Issuer Origin ID Test Vector</a>
         </h3>
 <p id="appendix-B.2-1">The test vector below for the procedure in <a href="#anon-issuer-origin-id" class="auto internal xref">Section 7</a> lists the following values:<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
