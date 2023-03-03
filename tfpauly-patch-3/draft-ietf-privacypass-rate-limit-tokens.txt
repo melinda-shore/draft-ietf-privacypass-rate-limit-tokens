@@ -1137,7 +1137,8 @@ authenticator = rsabssa_finalize(pkI, token_input, blind_sig, blind_inv)
    not exhaustive.
 
    *  Client Key changing more than once over any two consecutive policy
-      windows.  This is a Client-specific penalization event.  A
+      windows for a single Client, based on the Attester's view of
+      Client identity.  This is a Client-specific penalization event.  A
       RECOMMENDED threshold for penalizing the Client based on this is
       one event.
 
